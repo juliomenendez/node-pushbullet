@@ -68,4 +68,19 @@ PushBullet.prototype._listDevices = function() {
   request(PUSHBULLET_HOST + '/devices', {json: true}, devicesCallback);
 };
 
+PushBullet.prototype.push = function(type, device, title, body) {
+  var self = this;
+  var data = {
+    _csrf: this._csrf,
+    type: type,
+    device_id: device,
+    title: title,
+    body: body
+  };
+  var pushCallback = function(error, response, json) {
+    self.emit('pushed', json);
+  };
+  request.post(PUSHBULLET_HOST + '/push/' + type, {json: true, body: data}, pushCallback);
+};
+
 module.exports = PushBullet;
