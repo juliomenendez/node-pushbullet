@@ -1,18 +1,15 @@
 {
   "name": "node-pushbullet",
-  "version": "0.0.1",
+  "version": "0.8.1",
   "description": "node.js client for PushBullet",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://localhost/"
-  },
   "keywords": [
     "pushbullet",
-    "notification"
+    "notification",
+    "push"
   ],
   "author": "Julio Menendez",
   "license": "BSD",
@@ -22,5 +19,12 @@
     "soupselect": "~0.2.0",
     "form-data": "0.0.7",
     "emitter": "0.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/juliomenendez/node-pushbullet"
+  },
+  "bugs": {
+    "url": "http://github.com/juliomenendez/node-pushbullet/issues"
   }
 }
