@@ -12,7 +12,10 @@ var PushBullet = function(email, password) {
   this._email = email;
   this._password = password;
   this._cookies = request.jar();
+  this._csrf = '';
+
   this.devices = null;
+
   // Set some defaults for the requests.
   request = request.defaults({
     jar: this._cookies,
@@ -59,6 +62,7 @@ PushBullet.prototype._listDevices = function() {
     self.devices = json.devices.map(function(d) {
       return d.id;
     });
+    self._csrf = json.csrf;
     self.emit('ready', self.devices);
   };
   request(PUSHBULLET_HOST + '/devices', {json: true}, devicesCallback);
