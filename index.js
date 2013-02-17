@@ -33,7 +33,9 @@ PushBullet.prototype._authenticate = function() {
   };
 
   var signinGetCallback = function(error, response, body) {
-    self._parseHtml(body, function(dom) {
+    var handler = new htmlparser.DefaultHandler(function(error, dom) {
+      if(error) throw new Error(error);
+
       var fields = {};
       var form = select(dom, '#gaia_loginform')[0];
       select(form, 'input').forEach(function(input) {
@@ -44,18 +46,11 @@ PushBullet.prototype._authenticate = function() {
 
       request.post(form.attribs.action, {form: fields}, signinPostCallback);
     });
+
+    var parser = new htmlparser.Parser(handler);
+    parser.parseComplete(body);
   };
   request(PUSHBULLET_HOST + '/signin', {jar: this._cookies}, signinGetCallback);
-};
-
-PushBullet.prototype._parseHtml = function(content, callback) {
-  var handler = new htmlparser.DefaultHandler(function(error, dom) {
-    if(error) throw new Error(error);
-    callback(dom);
-  });
-
-  var parser = new htmlparser.Parser(handler);
-  parser.parseComplete(content);
 };
 
 PushBullet.prototype._listDevices = function() {
